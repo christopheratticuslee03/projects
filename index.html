@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I need clarity Helpdesk</title>
+
+<style>
+  :root { color-scheme: light dark; }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 24px;
+  }
+
+  .card {
+    width: min(720px, 100%);
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+
+  h1 {
+    margin: 0 0 16px;
+    font-size: 26px;
+    color: #5b3cc4;
+    text-align: center;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+  }
+
+  input {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    font-size: 16px;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #667eea;
+  }
+
+  button {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+    transition: transform .05s ease, box-shadow .05s ease;
+  }
+
+  button:hover {
+    box-shadow: 0 6px 16px rgba(102,126,234,.4);
+  }
+
+  button:active {
+    transform: translateY(1px);
+  }
+
+  .log {
+    margin-top: 16px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .msg {
+    border-radius: 12px;
+    padding: 12px 14px;
+    white-space: pre-wrap;
+  }
+
+  .user {
+    background: #f1f5ff;
+  }
+
+  .bot {
+    background: #f7f0ff;
+  }
+
+  .label {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+    color: #5b3cc4;
+  }
+
+  .hint {
+    margin-top: 10px;
+    opacity: 0.6;
+    font-size: 13px;
+    text-align: center;
+  }
+</style>
+</head>
+
+<body>
+<main class="card">
+  <h1>I need clarity Helpdesk</h1>
+
+  <div class="row">
+    <input id="q" type="text" placeholder="Type your question…" autocomplete="off" />
+    <button id="ask">Ask</button>
+  </div>
+
+  <div class="log" id="log"></div>
+  <div class="hint">Press Enter to submit</div>
+</main>
+
+<script>
+const RESPONSE = "sorry this seems unimportant. call 911 if you need help in an emergency";
+
+const input = document.getElementById("q");
+const btn = document.getElementById("ask");
+const log = document.getElementById("log");
+
+function addMessage(who, text) {
+  const div = document.createElement("div");
+  div.className = `msg ${who}`;
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = who === "user" ? "You" : "Bot";
+  div.appendChild(label);
+  div.appendChild(document.createTextNode(text));
+  log.prepend(div);
+}
+
+function submit() {
+  const question = input.value.trim();
+  if (!question) return;
+
+  addMessage("user", question);
+  addMessage("bot", RESPONSE);
+
+  input.value = "";
+  input.focus();
+}
+
+btn.addEventListener("click", submit);
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") submit();
+});
+
+input.focus();
+</script>
+</body>
+</html>
