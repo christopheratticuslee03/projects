@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mariam’s 22nd — Pajama Party</title>
+  <meta name="description" content="Mariam’s 22nd Pajama Party — details via Mariam. RSVP + sassy FAQ + iMessage bot." />
+  <style>
+    :root{
+      --bg1:#0f1020;
+      --bg2:#3a165a;
+      --text:#f6f4ff;
+      --muted: rgba(246,244,255,.75);
+      --muted2: rgba(246,244,255,.55);
+      --accent:#ff4fd8;
+      --accent2:#7cf7ff;
+      --border: rgba(255,255,255,.14);
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.12);
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+      --radius: 22px;
+      --radius2: 18px;
+      --im-blue: #0A84FF;
+      --im-green: #34C759;
+      --im-gray: rgba(255,255,255,.10);
+      --im-gray2: rgba(255,255,255,.16);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 700px at 18% 18%, rgba(255,79,216,.26), transparent 58%),
+        radial-gradient(900px 600px at 82% 26%, rgba(124,247,255,.18), transparent 58%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      padding: 26px 14px 70px;
+      display:flex;
+      justify-content:center;
+      overflow-x:hidden;
+      cursor: none; /* glitter cursor replaces system cursor */
+    }
+
+    /* accessible fallback: show cursor if prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce){
+      body{ cursor: auto; }
+      .sparkle, .cursor, .cursor-glow, .warn-burst { display:none !important; }
+      .warn-banner { animation:none !important; }
+    }
+
+    .wrap{ width: min(1040px, 100%); display:grid; gap: 16px; }
+
+    .hero{
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(600px 330px at 14% 0%, rgba(255,79,216,.32), transparent 62%),
+        radial-gradient(560px 320px at 86% 0%, rgba(124,247,255,.22), transparent 62%);
+      filter: blur(10px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .hero-inner{ position:relative; padding: 22px 20px 18px; display:grid; gap: 14px; }
+
+    .pill-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .pill{
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing:.2px;
+      color: var(--muted);
+      display:flex;
+      gap:8px;
+      align-items:center;
+      user-select:none;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(255,79,216,.55);
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(26px, 3.6vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height:1.5;
+      max-width: 78ch;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 6px;
+      align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      background: rgba(255,255,255,.10);
+      border: 1px solid var(--border);
+      transition: transform .08s ease, box-shadow .12s ease, background .12s ease;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      user-select:none;
+    }
+    .btn:hover{
+      background: rgba(255,255,255,.14);
+      box-shadow: 0 10px 25px rgba(0,0,0,.22);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,247,255,.75));
+      border: 1px solid rgba(255,255,255,.22);
+      color: #150a1f;
+      box-shadow: 0 18px 50px rgba(255,79,216,.22);
+    }
+    .btn.primary:hover{ box-shadow: 0 22px 70px rgba(255,79,216,.25); }
+
+    .btn.ghost{
+      background: rgba(0,0,0,.12);
+    }
+
+    .warn-banner{
+      margin-top: 6px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding: 10px 12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: rgba(246,244,255,.88);
+      position: relative;
+      overflow:hidden;
+    }
+    .warn-banner strong{ color: var(--text); }
+    .warn-banner small{ display:block; color: var(--muted2); margin-top:2px; }
+
+    .warn-burst{
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(closest-side, rgba(255,79,216,.28), transparent 65%),
+        radial-gradient(closest-side, rgba(124,247,255,.18), transparent 65%);
+      filter: blur(12px);
+      opacity:0;
+      transform: scale(.9);
+      pointer-events:none;
+    }
+
+    .warn-banner.pulse{
+      animation: wobble .62s ease-in-out;
+      border-color: rgba(255,79,216,.42);
+      box-shadow: 0 18px 60px rgba(255,79,216,.18);
+    }
+    .warn-banner.pulse .warn-burst{
+      animation: burst .62s ease-in-out;
+    }
+    @keyframes wobble{
+      0%{ transform: translateX(0); }
+      18%{ transform: translateX(-8px) rotate(-.4deg); }
+      36%{ transform: translateX(7px) rotate(.3deg); }
+      54%{ transform: translateX(-5px) rotate(-.2deg); }
+      72%{ transform: translateX(3px) rotate(.15deg); }
+      100%{ transform: translateX(0); }
+    }
+    @keyframes burst{
+      0%{ opacity:0; transform: scale(.92); }
+      30%{ opacity:1; }
+      100%{ opacity:0; transform: scale(1.04); }
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 16px 40px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .card-head{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .card-head h2{ margin:0; font-size: 16px; letter-spacing:.2px; }
+    .card-body{ padding: 14px 16px 16px; color: var(--muted); font-size: 14px; line-height:1.45; }
+
+    .kv{ display:grid; gap: 10px; }
+    .kv-row{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      border-radius: 14px;
+    }
+    .k{ color: rgba(246,244,255,.7); }
+    .v{ color: var(--text); font-weight: 750; }
+
+    /* iMessage card */
+    .im-shell{
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      overflow:hidden;
+    }
+    .im-topbar{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 12px;
+      background: rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .avatar{
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,79,216,.9), rgba(124,247,255,.75));
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      display:grid;
+      place-items:center;
+      color:#160a20;
+      font-weight:900;
+      letter-spacing: .5px;
+    }
+    .im-title{
+      display:grid;
+      line-height:1.1;
+    }
+    .im-title strong{ font-size: 14px; color: var(--text); }
+    .im-title span{ font-size: 12px; color: var(--muted2); }
+
+    .im-chat{
+      height: 360px;
+      overflow:auto;
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      scroll-behavior:smooth;
+    }
+
+    .bubble{
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.35;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      box-shadow: 0 12px 25px rgba(0,0,0,.20);
+    }
+    .bubble.bot{
+      align-self:flex-start;
+      background: var(--im-gray);
+      border-top-left-radius: 10px;
+    }
+    .bubble.you{
+      align-self:flex-end;
+      background: rgba(10,132,255,.92);
+      border-color: rgba(10,132,255,.35);
+      border-top-right-radius: 10px;
+    }
+
+    .quick{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      padding: 10px 12px 12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .chip{
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color: rgba(246,244,255,.92);
+      font-weight: 700;
+      font-size: 12.5px;
+      border-radius: 999px;
+      padding: 8px 10px;
+      transition: transform .08s ease, background .12s ease;
+      user-select:none;
+    }
+    .chip:hover{ background: rgba(255,255,255,.10); }
+    .chip:active{ transform: translateY(1px); }
+
+    .im-input{
+      display:flex;
+      gap: 10px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      align-items:center;
+    }
+    .im-input input{
+      flex:1;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+    }
+    .im-input input::placeholder{ color: rgba(246,244,255,.45); }
+    .send{
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(52,199,89,.9);
+      color: #07120b;
+      font-weight: 900;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition: transform .08s ease, filter .12s ease;
+      user-select:none;
+    }
+    .send:hover{ filter: brightness(1.05); }
+    .send:active{ transform: translateY(1px); }
+
+    /* FAQ */
+    .faq-wrap{ display:grid; gap: 10px; }
+    .faq-btn{
+      text-align:left;
+      width:100%;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.12);
+      border-radius: 16px;
+      padding: 12px 12px;
+      color: var(--text);
+      cursor:pointer;
+      transition: background .12s ease, transform .08s ease;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      user-select:none;
+    }
+    .faq-btn:hover{ background: rgba(255,255,255,.10); }
+    .faq-btn:active{ transform: translateY(1px); }
+    .q{ font-weight: 800; font-size: 14px; letter-spacing:.1px; }
+    .chev{
+      width: 28px; height: 28px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+    .answer{
+      display:none;
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(246,244,255,.88);
+    }
+    .answer.show{ display:block; }
+
+    .footer{
+      text-align:center;
+      color: rgba(246,244,255,.55);
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    /* RSVP modal */
+    .backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      z-index: 50;
+    }
+    .backdrop.show{ display:flex; }
+    .modal{
+      width: min(560px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+      box-shadow: 0 40px 120px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
+    }
+    .modal-head{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .modal-head strong{ font-size: 15px; }
+    .x{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color: var(--text);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      user-select:none;
+    }
+    .modal-body{
+      padding: 14px 16px 16px;
+      color: rgba(246,244,255,.88);
+      line-height: 1.45;
+      font-size: 14px;
+      display:grid;
+      gap: 12px;
+    }
+    .field{
+      display:grid;
+      gap: 6px;
+    }
+    .field label{ color: rgba(246,244,255,.75); font-size: 12.5px; font-weight: 800; letter-spacing:.2px; }
+    .field input, .field textarea{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+    }
+    .field textarea{ min-height: 74px; resize: vertical; }
+    .row2{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 560px){ .row2{ grid-template-columns: 1fr; } }
+
+    .toggle{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+    }
+    .toggle input{ transform: translateY(2px); }
+    .toggle strong{ display:block; }
+    .toggle span{ color: rgba(246,244,255,.65); font-size: 12.5px; }
+
+    .modal-actions{
+      display:flex;
+      gap: 10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      padding-top: 4px;
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.16);
+      color: rgba(246,244,255,.9);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 60;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* Sparkles layer */
+    .sparkle-layer{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: 5;
+      overflow:hidden;
+    }
+    .sparkle{
+      position:absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      transform: rotate(20deg);
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,247,255,.85));
+      box-shadow: 0 0 18px rgba(124,247,255,.25);
+      opacity: 0;
+      animation: twinkle 1.9s ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%{ opacity:0; transform: translateY(10px) rotate(20deg) scale(.7); }
+      20%{ opacity:.95; }
+      50%{ opacity:.25; }
+      80%{ opacity:.8; }
+      100%{ opacity:0; transform: translateY(-14px) rotate(20deg) scale(1.05); }
+    }
+
+    /* Glitter cursor */
+    .cursor{
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,247,255,.85));
+      box-shadow: 0 0 18px rgba(255,79,216,.35), 0 0 30px rgba(124,247,255,.25);
+      pointer-events:none;
+      z-index: 70;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+    }
+    .cursor-glow{
+      position: fixed;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,79,216,.30), transparent 65%);
+      pointer-events:none;
+      z-index: 69;
+      transform: translate(-50%, -50%);
+      filter: blur(1px);
+      mix-blend-mode: screen;
+    }
+    .glitter{
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, rgba(255,79,216,.95), rgba(124,247,255,.85));
+      opacity: .9;
+      pointer-events:none;
+      z-index: 68;
+      transform: translate(-50%, -50%) rotate(15deg);
+      animation: fadeOut .7s ease-out forwards;
+      mix-blend-mode: screen;
+    }
+    @keyframes fadeOut{
+      from{ opacity:.9; filter: blur(0px); }
+      to{ opacity:0; transform: translate(-50%, -70%) rotate(15deg) scale(.9); filter: blur(1px); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkle-layer" id="sparkleLayer" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="pill-row">
+          <div class="pill"><span class="dot"></span> Mariam’s 22nd Birthday</div>
+          <div class="pill">Theme: Pajama Party</div>
+          <div class="pill">Vibe: cozy + sassy</div>
+        </div>
+
+        <h1>Hi all! First things first: this is a <em>PAJAMA PARTY</em>.</h1>
+        <p class="sub">
+          Please respect the theme. If you need inspo, lmk. There will be a bit to drink, but BYOB
+          in accordance with how drunk you wanna get idk. Guests are welcome — just pls lmk first!
+        </p>
+
+        <div class="cta-row">
+          <button class="btn primary" id="rsvpBtn">RSVP</button>
+          <button class="btn" id="copyMsg">Copy invite text</button>
+          <button class="btn ghost" id="toggleAll">Expand all FAQs</button>
+        </div>
+
+        <div class="warn-banner" id="warn">
+          <div class="warn-burst" aria-hidden="true"></div>
+          <div>
+            <strong>Approved pajamas only.</strong> (Yes, we’re serious. No, we’re not.)
+            <small>If you show up in jeans, you will be emotionally prosecuted.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-head">
+          <h2>Details</h2>
+          <span class="pill">privacy mode: ON</span>
+        </div>
+        <div class="card-body">
+          <div class="kv">
+            <div class="kv-row"><div class="k">📍 Where</div><div class="v">Ask Mariam</div></div>
+            <div class="kv-row"><div class="k">🗓️ When</div><div class="v">Ask Mariam</div></div>
+            <div class="kv-row"><div class="k">👚 Dress code</div><div class="v">Pajamas required</div></div>
+            <div class="kv-row"><div class="k">🍸 Drinks</div><div class="v">Some provided + BYOB</div></div>
+            <div class="kv-row"><div class="k">➕ Plus-ones</div><div class="v">Okay — tell Mariam first</div></div>
+          </div>
+          <div class="footer">If you need the address/time: ask Mariam (she’s gatekeeping for safety).</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>FAQs</h2>
+          <span class="pill">tap to reveal</span>
+        </div>
+        <div class="card-body">
+          <div class="faq-wrap" id="faq">
+            <div>
+              <button class="faq-btn" data-id="theme">
+                <span class="q">Do I *have* to wear pajamas?</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-theme">Yes. This is a pajama party. Respectfully.</div>
+            </div>
+
+            <div>
+              <button class="faq-btn" data-id="inspo">
+                <span class="q">What counts as pajamas? I need inspo.</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-inspo">Matching set, robe moment, silky situation, oversized tee + shorts, onesie, cute sweats that clearly scream “sleepover.”</div>
+            </div>
+
+            <div>
+              <button class="faq-btn" data-id="byob">
+                <span class="q">Is it BYOB or are we being hosted like royalty?</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-byob">There will be a bit to drink, but BYOB according to your personal chaos level. Choose your own adventure.</div>
+            </div>
+
+            <div>
+              <button class="faq-btn" data-id="guests">
+                <span class="q">Can I bring a guest?</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-guests">Guests are welcome — just lmk first so we don’t accidentally recreate a nightclub line.</div>
+            </div>
+
+            <div>
+              <button class="faq-btn" data-id="arrival">
+                <span class="q">When should I pull up?</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-arrival">After the start time. If you’re early, you’re helping. If you’re late, you’re bringing gossip.</div>
+            </div>
+
+            <div>
+              <button class="faq-btn" data-id="food">
+                <span class="q">Should I bring snacks?</span>
+                <span class="chev">+</span>
+              </button>
+              <div class="answer" id="a-food">Not required, but always appreciated. Bonus points for anything crunchy, sweet, or aggressively shareable.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="card-head">
+          <h2>iMessage Party Bot</h2>
+          <span class="pill">click a quick question</span>
+        </div>
+        <div class="card-body">
+          <div class="im-shell">
+            <div class="im-topbar">
+              <div class="avatar">M</div>
+              <div class="im-title">
+                <strong>Mariam’s Pajama Hotline</strong>
+                <span>Typically replies with attitude</span>
+              </div>
+            </div>
+
+            <div class="im-chat" id="chat" aria-live="polite"></div>
+
+            <div class="quick" id="quick">
+              <div class="chip" data-q="Do I have to wear pajamas?">Pajamas??</div>
+              <div class="chip" data-q="Is it BYOB?">BYOB?</div>
+              <div class="chip" data-q="Can I bring a guest?">+1?</div>
+              <div class="chip" data-q="What’s the vibe?">Vibe?</div>
+              <div class="chip" data-q="Where/when is it?">Where/When?</div>
+            </div>
+
+            <div class="im-input">
+              <input id="msg" type="text" placeholder="iMessage… (try anything)" autocomplete="off" />
+              <button class="send" id="send" title="Send">↑</button>
+            </div>
+          </div>
+          <div class="footer">Bot is sassy, not omniscient. Address/time: ask Mariam.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- RSVP Modal -->
+  <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-label="RSVP">
+    <div class="modal">
+      <div class="modal-head">
+        <strong>RSVP for Mariam’s 22nd</strong>
+        <div class="x" id="close" aria-label="Close">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="toggle" id="pjToggle">
+          <input type="checkbox" id="pjs" />
+          <div>
+            <strong>I solemnly swear I will wear pajamas</strong>
+            <span>(approved pajamas only… you know the rules)</span>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" placeholder="e.g., Sasha" />
+          </div>
+          <div class="field">
+            <label for="status">RSVP status</label>
+            <input id="status" placeholder="e.g., YES / maybe / i’ll see" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="note">Notes (optional)</label>
+          <textarea id="note" placeholder="Plus-one? Snack contributions? Secret intel?"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn" id="copyRsvp">Copy RSVP message</button>
+          <button class="btn primary" id="done">Done</button>
+        </div>
+
+        <div class="footer">This page doesn’t send anything. It copies a message you can text Mariam.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied ✨</div>
+
+  <script>
+    // ===== Helpers =====
+    const toast = document.getElementById("toast");
+    function showToast(text="Copied ✨"){
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => toast.classList.remove("show"), 1400);
+    }
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast();
+      }catch(e){
+        showToast("Couldn’t copy (browser blocked)");
+      }
+    }
+
+    // ===== Warning animation on click =====
+    const warn = document.getElementById("warn");
+    warn.addEventListener("click", () => {
+      warn.classList.remove("pulse");
+      void warn.offsetWidth;
+      warn.classList.add("pulse");
+    });
+
+    // ===== FAQ toggles =====
+    const faqButtons = document.querySelectorAll(".faq-btn");
+    const toggleAllBtn = document.getElementById("toggleAll");
+    let allExpanded = false;
+
+    function toggleFaq(id, force=null){
+      const ans = document.getElementById("a-" + id);
+      const btn = document.querySelector(`.faq-btn[data-id="${id}"]`);
+      const chev = btn.querySelector(".chev");
+      const shouldShow = (force === null) ? !ans.classList.contains("show") : force;
+      ans.classList.toggle("show", shouldShow);
+      chev.textContent = shouldShow ? "–" : "+";
+    }
+    faqButtons.forEach(btn => btn.addEventListener("click", () => toggleFaq(btn.dataset.id)));
+    toggleAllBtn.addEventListener("click", () => {
+      allExpanded = !allExpanded;
+      faqButtons.forEach(btn => toggleFaq(btn.dataset.id, allExpanded));
+      toggleAllBtn.textContent = allExpanded ? "Collapse all FAQs" : "Expand all FAQs";
+    });
+
+    // ===== Copy invite text =====
+    const inviteText = "Hi all! first things first, this is a PAJAMA PARTY. please respect the theme. if u need inspo lmk. there will be a bit to drink but byob in accordance with how drunk u wanna get idk. guests are welcome just pls lmk first!";
+    document.getElementById("copyMsg").addEventListener("click", () => copyText(inviteText).then(()=>showToast("Invite text copied ✨")));
+
+    // ===== RSVP modal =====
+    const backdrop = document.getElementById("backdrop");
+    const rsvpBtn = document.getElementById("rsvpBtn");
+    const closeBtn = document.getElementById("close");
+    const doneBtn = document.getElementById("done");
+    const copyRsvpBtn = document.getElementById("copyRsvp");
+    const pjCheck = document.getElementById("pjs");
+
+    function openModal(){ backdrop.classList.add("show"); }
+    function closeModal(){ backdrop.classList.remove("show"); }
+
+    rsvpBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    doneBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (e) => { if(e.target === backdrop) closeModal(); });
+
+    function buildRsvpMessage(){
+      const name = (document.getElementById("name").value || "—").trim();
+      const status = (document.getElementById("status").value || "—").trim();
+      const note = (document.getElementById("note").value || "").trim();
+      const pjs = pjCheck.checked ? "✅ pajamas confirmed" : "⚠️ pajamas TBD (don’t yell at me)";
+      return `RSVP — Mariam’s 22nd Pajama Party\nName: ${name}\nStatus: ${status}\n${pjs}${note ? `\nNotes: ${note}` : ""}`;
+    }
+
+    copyRsvpBtn.addEventListener("click", async () => {
+      // Pajamas warning animation if unchecked
+      if(!pjCheck.checked){
+        warn.classList.remove("pulse");
+        void warn.offsetWidth;
+        warn.classList.add("pulse");
+        showToast("Pajamas not confirmed 👀");
+      }
+      await copyText(buildRsvpMessage());
+      showToast("RSVP message copied 📲");
+    });
+
+    // ===== iMessage bot =====
+    const chat = document.getElementById("chat");
+    const msg = document.getElementById("msg");
+    const send = document.getElementById("send");
+    const quick = document.getElementById("quick");
+
+    function addBubble(text, who){
+      const b = document.createElement("div");
+      b.className = "bubble " + who;
+      b.textContent = text;
+      chat.appendChild(b);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    const replies = [
+      { match: ["pajama","pjs","dress","wear"], answer: "Yes. Pajamas. This is not a drill. If you need inspo, text Mariam." },
+      { match: ["byob","drink","alcohol","booze"], answer: "There will be a bit to drink, but BYOB based on your personal chaos level. Hydrate like an adult." },
+      { match: ["guest","+1","plus","friend"], answer: "Guests are welcome — just let Mariam know first. No surprise strangers. We’re not running a nightclub." },
+      { match: ["where","address","location","when","time","date"], answer: "Address/time are not on the internet (for obvious reasons). Ask Mariam directly 🫶" },
+      { match: ["vibe","what's the vibe","music","theme"], answer: "Sleepover-core: cozy, photos, laughs, a little chaos, zero seriousness. Main character energy welcome." },
+      { match: ["snack","food","bring"], answer: "Not required but always appreciated. Bring something shareable and you’ll be celebrated." },
+    ];
+
+    function botAnswer(userText){
+      const t = userText.toLowerCase();
+      for(const r of replies){
+        if(r.match.some(m => t.includes(m))) return r.answer;
+      }
+      return "Cute question. Unfortunately, the answer is: ask Mariam. (Or just show up in pajamas and vibe.)";
+    }
+
+    function sendMessage(text){
+      const q = (text ?? msg.value).trim();
+      if(!q) return;
+      addBubble(q, "you");
+      msg.value = "";
+      // tiny "typing" delay
+      const typing = document.createElement("div");
+      typing.className = "bubble bot";
+      typing.textContent = "…";
+      chat.appendChild(typing);
+      chat.scrollTop = chat.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        addBubble(botAnswer(q), "bot");
+      }, 420);
+    }
+
+    send.addEventListener("click", () => sendMessage());
+    msg.addEventListener("keydown", (e) => { if(e.key === "Enter") sendMessage(); });
+    quick.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if(!chip) return;
+      sendMessage(chip.dataset.q);
+    });
+
+    // Seed chat
+    addBubble("Welcome to Mariam’s Pajama Hotline. Ask away (but keep it cute).", "bot");
+    addBubble("Reminder: address/time are private. Ask Mariam.", "bot");
+
+    // ===== Sparkles (ambient) =====
+    const sparkleLayer = document.getElementById("sparkleLayer");
+    function spawnSparkle(){
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const size = 7 + Math.random() * 10;
+      s.style.left = x + "px";
+      s.style.top = y + "px";
+      s.style.width = size + "px";
+      s.style.height = size + "px";
+      s.style.animationDuration = (1.6 + Math.random()*1.8) + "s";
+      s.style.animationDelay = (Math.random()*0.6) + "s";
+      sparkleLayer.appendChild(s);
+      setTimeout(() => s.remove(), 2600);
+    }
+    // a few at load
+    for(let i=0;i<18;i++) setTimeout(spawnSparkle, i*90);
+    // continue gently
+    setInterval(() => { if(document.hidden) return; spawnSparkle(); }, 280);
+
+    // ===== Glitter cursor trail =====
+    const cursor = document.getElementById("cursor");
+    const cursorGlow = document.getElementById("cursorGlow");
+    let lastG = 0;
+
+    function makeGlitter(x,y){
+      const g = document.createElement("div");
+      g.className = "glitter";
+      g.style.left = x + "px";
+      g.style.top = y + "px";
+      g.style.width = (4 + Math.random()*6) + "px";
+      g.style.height = g.style.width;
+      g.style.transform = `translate(-50%, -50%) rotate(${10 + Math.random()*40}deg)`;
+      document.body.appendChild(g);
+      setTimeout(() => g.remove(), 760);
+    }
+
+    window.addEventListener("mousemove", (e) => {
+      const x = e.clientX, y = e.clientY;
+      cursor.style.left = x + "px";
+      cursor.style.top = y + "px";
+      cursorGlow.style.left = x + "px";
+      cursorGlow.style.top = y + "px";
+
+      const now = performance.now();
+      if(now - lastG > 18){ // throttle particles
+        makeGlitter(x + (Math.random()*10-5), y + (Math.random()*10-5));
+        lastG = now;
+      }
+    }, { passive:true });
+
+    // If user taps on mobile, show a few sparkles
+    window.addEventListener("touchstart", (e) => {
+      const t = e.touches && e.touches[0];
+      if(!t) return;
+      for(let i=0;i<12;i++){
+        setTimeout(() => {
+          const s = document.createElement("div");
+          s.className = "sparkle";
+          const dx = (Math.random()*120-60);
+          const dy = (Math.random()*120-60);
+          const size = 7 + Math.random()*10;
+          s.style.left = (t.clientX + dx) + "px";
+          s.style.top = (t.clientY + dy) + "px";
+          s.style.width = size + "px";
+          s.style.height = size + "px";
+          s.style.animationDuration = (1.2 + Math.random()*1.2) + "s";
+          sparkleLayer.appendChild(s);
+          setTimeout(() => s.remove(), 2200);
+        }, i*18);
+      }
+    }, { passive:true });
+
+  </script>
+</body>
+</html>
