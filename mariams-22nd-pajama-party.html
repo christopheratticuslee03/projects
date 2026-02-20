@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mariam’s 22nd — Pajama Party</title>
+  <style>
+    :root{
+      --bg1:#0f1020;
+      --bg2:#3a165a;
+      --text:#f6f4ff;
+      --muted: rgba(246,244,255,.75);
+      --accent:#ff4fd8;
+      --accent2:#7cf7ff;
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+      --radius: 22px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 700px at 20% 20%, rgba(255,79,216,.28), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(124,247,255,.18), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      padding: 28px 16px 60px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{ width: min(980px, 100%); display:grid; gap: 16px; }
+    .hero{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-inner{ padding: 26px 22px; display:grid; gap: 14px; }
+    .pill{
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      margin-right:8px;
+    }
+    h1{ margin:0; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.05; }
+    .sub{ margin:0; color: var(--muted); font-size: 15px; line-height:1.45; }
+    .grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+    .card{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 16px 40px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .card-head{ padding: 16px; border-bottom: 1px solid rgba(255,255,255,.10); }
+    .card-body{ padding: 14px 16px 16px; color: var(--muted); font-size: 14px; }
+    .kv-row{
+      display:flex; justify-content:space-between;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      border-radius: 14px;
+      margin-bottom:8px;
+    }
+    .k{ color: rgba(246,244,255,.7); }
+    .v{ color: var(--text); font-weight: 650; }
+    .faq-btn{
+      width:100%;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.12);
+      border-radius: 16px;
+      padding: 12px;
+      color: var(--text);
+      cursor:pointer;
+      margin-bottom:8px;
+      font-weight:700;
+      text-align:left;
+    }
+    .answer{
+      display:none;
+      margin-top:6px;
+      margin-bottom:10px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(246,244,255,.9);
+    }
+    .answer.show{ display:block; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <span class="pill">Mariam’s 22nd</span>
+          <span class="pill">Pajama Party</span>
+        </div>
+        <h1>Hi all! First things first: this is a <em>PAJAMA PARTY</em>.</h1>
+        <p class="sub">
+          Please respect the theme. If you need inspo, lmk. There will be a bit to drink,
+          but BYOB in accordance with how drunk you wanna get idk.
+          Guests are welcome — just pls lmk first!
+        </p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-head"><strong>Details</strong></div>
+        <div class="card-body">
+          <div class="kv-row"><div class="k">📍 Where</div><div class="v">Ask Mariam</div></div>
+          <div class="kv-row"><div class="k">🗓️ When</div><div class="v">Ask Mariam</div></div>
+          <div class="kv-row"><div class="k">👚 Dress code</div><div class="v">Pajamas required</div></div>
+          <div class="kv-row"><div class="k">🍸 Drinks</div><div class="v">Some provided + BYOB</div></div>
+          <div class="kv-row"><div class="k">➕ Plus-ones</div><div class="v">Okay — tell Mariam first</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><strong>Ask the Party Bot</strong></div>
+        <div class="card-body">
+          <button class="faq-btn" data-id="theme">Do I actually have to wear pajamas?</button>
+          <div class="answer" id="a-theme">Yes. This is a pajama party. Respectfully.</div>
+
+          <button class="faq-btn" data-id="byob">Is it BYOB?</button>
+          <div class="answer" id="a-byob">There will be a bit to drink, but BYOB based on your personal chaos level.</div>
+
+          <button class="faq-btn" data-id="guest">Can I bring a guest?</button>
+          <div class="answer" id="a-guest">Guests are welcome — just lmk first so we can plan vibes accordingly.</div>
+
+          <button class="faq-btn" data-id="vibe">What’s the vibe?</button>
+          <div class="answer" id="a-vibe">Sleepover-core. Cute. Chaotic. Camera roll will be active.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ans = document.getElementById('a-' + btn.dataset.id);
+    ans.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
